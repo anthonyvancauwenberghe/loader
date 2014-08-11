@@ -9,6 +9,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+/**
+ * Created by Cory
+ * on 11/08/2014.
+ */
 public class Client {
 
 	public final static HashMap<String, String> PARAMETERS = new HashMap<String, String>();
