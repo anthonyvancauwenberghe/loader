@@ -26,8 +26,8 @@ public class Resource {
 	public static ArrayList<Image> getIconImages() {
 		ArrayList<Image> icons = new ArrayList<Image>();
 		icons.add(get("i16"));
+		icons.add(get("i24"));
 		icons.add(get("i32"));
-		icons.add(get("i64"));
 		return icons;
 	}
 }

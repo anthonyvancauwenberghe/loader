@@ -32,7 +32,7 @@ public class Stub implements AppletStub {
 
 	@Override
 	public String getParameter(String name) {
-		return Client.PARAMETERS.get(name);
+		return"";
 	}
 
 	@Override
