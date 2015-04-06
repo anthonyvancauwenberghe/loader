@@ -27,20 +27,28 @@ public class Loader extends JFrame implements ActionListener {
 	private JMenuItem closeTab;
 	private int tabIndex = 1;
 
+    public static boolean DEV = false;
+
 	public static void main(String[] args) throws IOException, InvocationTargetException, InterruptedException {
 		RuntimeMXBean runtimeMxBean = ManagementFactory.getRuntimeMXBean();
 		java.util.List<String> arguments = runtimeMxBean.getInputArguments();
 		StringBuilder arg = new StringBuilder();
 		for (String argument : arguments)
-			arg.append(argument);
+            arg.append(argument);
+
+        if(args.length > 0 && args[0].toString().contains("-dev")) {
+            DEV = true;
+            System.out.println("Loading in DEV Mode...");
+        }
 
 		String name = Loader.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        System.out.println("name: " + name);
 		name = URLDecoder.decode(name, "UTF-8");
 		name = name.substring(name.lastIndexOf("/") + 1);
-
 		if (!arg.toString().contains("-Xmx")) {
+            String[] argus = DEV ? new String[]{"java", "-Xmx512m", "-jar", name, "-dev"} : new String[]{"java", "-Xmx512m", "-jar", name};
 			if (!name.isEmpty())
-				Runtime.getRuntime().exec(new String[]{"java", "-Xmx512m", "-jar", name});
+				Runtime.getRuntime().exec(argus);
 			else
 				JOptionPane.showMessageDialog(null, "Please start the loader with > 512m of memory. ");
 		} else {
@@ -92,7 +100,7 @@ public class Loader extends JFrame implements ActionListener {
 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setJMenuBar(menuBar);
-		setTitle("DeviousPK");
+		setTitle("ArteroPK " + (DEV ? "BETA" : ""));
 		setContentPane(contentPane);
 		pack();
 		setLocationRelativeTo(null);

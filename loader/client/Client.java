@@ -1,5 +1,7 @@
 package loader.client;
 
+import loader.Loader;
+
 import java.awt.Color;
 import java.io.*;
 import java.net.URL;
@@ -17,6 +19,7 @@ public class Client {
 
     public static final String JAR_NAME = "Webclient.jar";
     public static final String JAR_URL = "http://cache.arteropk.com/" + JAR_NAME;
+    public static final String DEV_JAR_URL = "http://cache.loginto.me/betacache/Client/" + JAR_NAME;
     public static final String CLIENT_CLASS = "dvpk.DeviousPK";
 
     private static boolean isInitialized;
@@ -38,13 +41,15 @@ public class Client {
 
     public static void downloadJar() {
         try {
+            /*System.out.println("Cache Dir: " + (getPublicCache() + "Client" + File.separator + JAR_NAME));
+            System.out.println("Client URL: " + (Loader.DEV ? DEV_JAR_URL : JAR_URL));*/
             File file = new File(getPublicCache() + "Client" + File.separator + JAR_NAME);
             try {
                 file.getParentFile().mkdirs();
             } catch (Exception ignore) {
                 ignore.printStackTrace();
             }
-            BufferedInputStream input = new BufferedInputStream(new URL(JAR_URL).openStream());
+            BufferedInputStream input = new BufferedInputStream(new URL(Loader.DEV ? DEV_JAR_URL : JAR_URL).openStream());
             BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(file));
             int bytesRead = 0;
             while ((bytesRead = input.read()) != -1) {
@@ -70,13 +75,13 @@ public class Client {
 
     public static String getPublicCache() {
         String home = System.getProperty("user.home");
-        String path = home + File.separator + getCacheName() + File.separator;
+        String path = home + File.separator + getCacheName() + (Loader.DEV ? "Beta" : "") + File.separator;
         new File(path).mkdirs();
         return path;
     }
 
     public static String getCacheName() {
-        return "DeviousPKCache";
+        return "ArteroPKCache";
     }
 
 	public static java.applet.Applet getApplet() {
